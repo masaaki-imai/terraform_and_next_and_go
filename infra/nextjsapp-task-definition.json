@@ -1,0 +1,33 @@
+[
+    {
+      "name": "${ecs_service_name}",
+      "image": "${docker_image_url}",
+      "essential": true,
+      "portMappings": [{
+        "containerPort": ${container_port}
+      }],
+      "environment": [
+        {
+          "name": "NEXT_PUBLIC_API_URL_CONTAINER",
+          "value": "https://api.${domain_name}"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${ecs_service_name}-LogGroup",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "${ecs_service_name}-stream"
+        }
+      },
+      "secrets": [
+        {
+          "name": "JWT_SECRET_KEY",
+          "valueFrom": "${jwt_secret_key_param}"
+        }
+      ],
+      "linuxParameters": {
+        "initProcessEnabled": true
+      }
+    }
+  ]

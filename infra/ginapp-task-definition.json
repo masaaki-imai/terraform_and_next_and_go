@@ -1,0 +1,47 @@
+[
+    {
+      "name": "${ecs_service_name}",
+      "image": "${docker_image_url}",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": "${container_port}"
+        }
+      ],
+      "environment": [
+        {
+          "name": "DB_HOST",
+          "value": "${db_host}"
+        },
+        {
+          "name": "DB_NAME",
+          "value": "${db_name}"
+        },
+        {
+          "name": "DB_USER",
+          "value": "${db_user}"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "${db_password_param}"
+        },
+        {
+          "name": "JWT_SECRET_KEY",
+          "valueFrom": "${jwt_secret_key_param}"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${ecs_service_name}-LogGroup",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "${ecs_service_name}-stream"
+        }
+      },
+      "linuxParameters": {
+        "initProcessEnabled": true
+      }
+    }
+  ]
