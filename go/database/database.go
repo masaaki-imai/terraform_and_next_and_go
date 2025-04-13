@@ -18,7 +18,7 @@ func ConnectDB() *gorm.DB {
 	var db *gorm.DB
 	var err error
 
-	dsn := "%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FTokyo"
+	dsn := "%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&parseTime=True"
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASSWORD")
